@@ -9,7 +9,7 @@ import os
 def build():
     """执行打包"""
     print("=" * 50)
-    print("WindowHack 打包工具")
+    print("wintracker 打包工具")
     print("=" * 50)
     
     # 确保在正确的目录
@@ -23,7 +23,7 @@ def build():
         sys.executable, "-m", "PyInstaller",
         "--onefile",           # 打包成单个文件
         "--windowed",          # 不显示控制台窗口
-        "--name", "windowhack",
+        "--name", "wintracker",
         "--clean",             # 清理临时文件
         "main.py"
     ]
@@ -54,10 +54,10 @@ def build():
     print("✅ 打包完成!")
     print("=" * 50)
     print(f"\n生成的文件位于: {os.path.join(script_dir, 'dist')}")
-    print("  - windowhack.exe          (主程序)")
+    print("  - wintracker.exe          (主程序)")
     print("  - install_context_menu.exe (右键菜单安装工具)")
     print("\n使用方法:")
-    print("1. 运行 windowhack.exe 即可使用")
+    print("1. 运行 wintracker.exe 即可使用")
     print("2. 以管理员身份运行 install_context_menu.exe 来添加右键菜单")
     
     return True

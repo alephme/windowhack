@@ -17,17 +17,17 @@ def is_admin():
 
 
 def get_exe_path():
-    """获取 windowhack.xexe 文件路径"""
-    # 如果是打包后的 exe，查找同目录下的 windowhack.exe
+    """获取 wintracker.xexe 文件路径"""
+    # 如果是打包后的 exe，查找同目录下的 wintracker.exe
     if getattr(sys, 'frozen', False):
         exe_dir = os.path.dirname(sys.executable)
-        exe_path = os.path.join(exe_dir, "windowhack.exe")
-        if os.path.eists(exe_path):
+        exe_path = os.path.join(exe_dir, "wintracker.exe")
+        if os.path.exists(exe_path):
             return exe_path
     
     # 开发环境下，查找 dist 目录
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    exe_path = os.path.join(script_dir, "dist", "windowhack.exe")
+    exe_path = os.path.join(script_dir, "dist", "wintracker.exe")
     
     if os.path.exists(exe_path):
         return exe_path
@@ -40,9 +40,9 @@ def install_context_menu():
     exe_path = get_exe_path()
     
     if not exe_path:
-        print("错误: 找不到 windowhack.exe")
+        print("错误: 找不到 wintracker.exe")
         print("请先运行打包命令生成 exe 文件:")
-        print("  uv run pyinstaller --onefile --windowed --name windowhack main.py")
+        print("  uv run pyinstaller --onefile --windowed --name wintracker main.py")
         return False
     
     print(f"使用的 exe 路径: {exe_path}")
@@ -52,11 +52,11 @@ def install_context_menu():
         # 需要在 HKEY_CLASSES_ROOT\*\shell 下添加
         
         # 为所有文件添加右键菜单
-        key_path = r"*\shell\WindowHack"
+        key_path = r"*\shell\wintracker"
         
         # 创建主键
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, key_path)
-        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (WindowHack)")
+        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (wintracker)")
         winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, exe_path)
         winreg.CloseKey(key)
         
@@ -66,10 +66,10 @@ def install_context_menu():
         winreg.CloseKey(cmd_key)
         
         # 为目录添加右键菜单
-        dir_key_path = r"Directory\shell\WindowHack"
+        dir_key_path = r"Directory\shell\wintracker"
         
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, dir_key_path)
-        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (WindowHack)")
+        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (wintracker)")
         winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, exe_path)
         winreg.CloseKey(key)
         
@@ -78,10 +78,10 @@ def install_context_menu():
         winreg.CloseKey(cmd_key)
         
         # 为目录背景添加右键菜单
-        bg_key_path = r"Directory\Background\shell\WindowHack"
+        bg_key_path = r"Directory\Background\shell\wintracker"
         
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, bg_key_path)
-        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (WindowHack)")
+        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (wintracker)")
         winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, exe_path)
         winreg.CloseKey(key)
         
@@ -90,10 +90,10 @@ def install_context_menu():
         winreg.CloseKey(cmd_key)
         
         # 为桌面添加右键菜单
-        desktop_key_path = r"DesktopBackground\shell\WindowHack"
+        desktop_key_path = r"DesktopBackground\shell\wintracker"
         
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, desktop_key_path)
-        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (WindowHack)")
+        winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "查看窗口信息 (wintracker)")
         winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, exe_path)
         winreg.CloseKey(key)
         
@@ -103,7 +103,7 @@ def install_context_menu():
         
         print("✅ 右键菜单安装成功!")
         print("\n注意: Windows 11 默认显示简化右键菜单")
-        print("你可能需要点击 '显示更多选项' 才能看到 WindowHack")
+        print("你可能需要点击 '显示更多选项' 才能看到 wintracker")
         print("或者按住 Shift 键再右键点击")
         return True
         
@@ -119,10 +119,10 @@ def uninstall_context_menu():
     """卸载右键菜单项"""
     try:
         paths = [
-            r"*\shell\WindowHack",
-            r"Directory\shell\WindowHack",
-            r"Directory\Background\shell\WindowHack",
-            r"DesktopBackground\shell\WindowHack",
+            r"*\shell\wintracker",
+            r"Directory\shell\wintracker",
+            r"Directory\Background\shell\wintracker",
+            r"DesktopBackground\shell\wintracker",
         ]
         
         for path in paths:
@@ -151,7 +151,7 @@ def uninstall_context_menu():
 
 def main():
     print("=" * 50)
-    print("WindowHack 右键菜单安装工具")
+    print("wintracker 右键菜单安装工具")
     print("=" * 50)
     
     if not is_admin():
